@@ -1,6 +1,5 @@
 package com.eql.models;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,4 +29,6 @@ public class Role {
     private String label;
     @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
+
+
 }

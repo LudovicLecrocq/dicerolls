@@ -1,5 +1,6 @@
 package com.eql.models;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
