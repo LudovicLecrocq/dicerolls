@@ -30,5 +30,8 @@ public class UserDto {
     @NotEmpty(message = "Password should not be empty.")
     private String password;
 
+    @NotEmpty
+    private String login;
+
 
 }
