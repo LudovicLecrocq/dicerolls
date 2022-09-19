@@ -30,6 +30,4 @@ public class Role {
     private String label;
     @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
-
-
 }
