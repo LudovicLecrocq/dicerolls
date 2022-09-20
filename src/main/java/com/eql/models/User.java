@@ -49,9 +49,8 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @JoinTable(name = "user_personnage", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "persoId", referencedColumnName = "id")})
     private List<Personnage> personnages = new ArrayList<>();
-
 }

@@ -12,12 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "Personnnage")
 public class Personnage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +31,7 @@ public class Personnage {
 
     @Column(name = "prenom", nullable = false)
     private String surname;
-    @ManyToOne()
+    @ManyToOne
     private User user;
 
 }
