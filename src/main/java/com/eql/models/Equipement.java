@@ -30,7 +30,7 @@ public class Equipement {
     private Long id;
 
     @OneToOne(mappedBy = "equipement")
-    private User user;
+    private Personnage personnage;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "equip_weapon",

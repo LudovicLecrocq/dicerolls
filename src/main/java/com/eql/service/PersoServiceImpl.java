@@ -24,6 +24,6 @@ public class PersoServiceImpl implements  PersoService{
 
     @Override
     public User findUserById(Long id) {
-        return userRepository.findByPersoId(id);
+        return userRepository.findById(id).get();
     }
 }
