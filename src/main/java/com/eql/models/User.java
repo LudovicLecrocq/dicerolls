@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,4 +54,8 @@ public class User {
     @JoinTable(name = "user_personnage", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "persoId", referencedColumnName = "id")})
     private List<Personnage> personnages = new ArrayList<>();
+
+    @OneToOne()
+    @JoinColumn(name = "equipementId",referencedColumnName = "equipementId")
+    Equipement equipement;
 }
