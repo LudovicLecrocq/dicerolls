@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersoRepo extends JpaRepository<Personnage,Long> {
 
-//    @Query("From User Where ")
-//    User findUserById(@Param("id") long id);
+    @Query("From User Where id = :idU ")
+    User findUserById(@Param("idU") long id);
 }

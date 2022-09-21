@@ -1,5 +1,6 @@
 package com.eql.service;
 
+import com.eql.dto.PersoDto;
 import com.eql.dto.UserDto;
 import com.eql.models.User;
 
@@ -12,5 +13,7 @@ public interface UserService {
     User findUserByEmail(String email);
 
     List<UserDto> findAllUser();
+
+    void addPerso(Long id, PersoDto dto);
 
 }
