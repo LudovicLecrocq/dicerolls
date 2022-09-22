@@ -1,19 +1,17 @@
 package com.eql.service;
 
-import com.eql.dto.PersoDto;
-import com.eql.dto.UserDto;
 import com.eql.models.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    void saveUser(UserDto userDto);
+    void saveUser(User user);
 
     User findUserByEmail(String email);
 
-    List<UserDto> findAllUser();
+    List<User> findAllUser();
 
-    void addPerso(Long id, PersoDto dto);
+
 
 }

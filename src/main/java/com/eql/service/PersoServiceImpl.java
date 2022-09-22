@@ -1,6 +1,5 @@
 package com.eql.service;
 
-import com.eql.dto.PersoDto;
 import com.eql.models.Personnage;
 import com.eql.models.User;
 import com.eql.repository.PersoRepo;
@@ -16,12 +15,8 @@ public class PersoServiceImpl implements  PersoService{
     UserRepository userRepository;
 
     @Override
-    public void savePerso(PersoDto persoDto) {
-        Personnage personnage = new Personnage();
-        personnage.setName(persoDto.getName());
-        personnage.setSurname(persoDto.getSurname());
-        personnage.setUser(persoDto.getUser());
-        repo.save(personnage);
+    public void savePerso(Personnage perso) {
+        repo.save(perso);
     }
 
     @Override

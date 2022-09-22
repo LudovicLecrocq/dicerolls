@@ -1,14 +1,12 @@
 package com.eql.controller;
 
 
-import com.eql.dto.PersoDto;
-import com.eql.dto.UserDto;
+import com.eql.models.Personnage;
 import com.eql.models.User;
 import com.eql.service.PersoService;
 import com.eql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,29 +32,28 @@ public class AuthController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
-        UserDto user = new UserDto();
+        User user = new User();
         model.addAttribute("user", user);
         return "register";
     }
-
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user")UserDto userDto, BindingResult result, Model model){
-        User existingUser = service.findUserByEmail(userDto.getEmail());
+    public String registration(@Valid @ModelAttribute("user")User user, BindingResult result, Model model){
+        User existingUser = service.findUserByEmail(user.getEmail());
         if (existingUser!=null && existingUser.getEmail()!=null){
             result.rejectValue("email",null,"Email already in use");
         }
 
         if (result.hasErrors()){
-            model.addAttribute("user",userDto);
+            model.addAttribute("user",user);
             return "register";
         }
-        service.saveUser(userDto);
-        return "redirect:/register?success";
+        service.saveUser(user);
+        return "redirect:/index?success";
     }
 
     @GetMapping("/users")
     public String users(Model model){
-        List<UserDto> users = service.findAllUser();
+        List<User> users = service.findAllUser();
         model.addAttribute("users",users);
         return "users";
     }
@@ -67,23 +64,20 @@ public class AuthController {
 
     @GetMapping("/perso")
     public String per(Model model){
-        PersoDto perso = new PersoDto();
+        Personnage perso = new Personnage();
         model.addAttribute("perso",perso);
         return "perso";
     }
     @PostMapping("/perso/save")
-    public  String perso(@Valid @ModelAttribute("perso") PersoDto persoDto, BindingResult result, Model model){
+    public  String perso(@Valid @ModelAttribute("perso") Personnage perso, BindingResult result, Model model){
         if(result.hasErrors()){
-            model.addAttribute(persoDto);
+            model.addAttribute(perso);
             return "perso";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.findUserByEmail(authentication.getName());
-        persoDto.setUser(user);
-        System.out.println(user);
-        System.out.println(persoDto);
-        System.out.println(persoDto.getName() + "  " + persoDto.getSurname() + "   " + persoDto.getUser().getId());
-        persoService.savePerso(persoDto);
+        perso.setUser(user);
+        persoService.savePerso(perso);
         return "index";
     }
 }
