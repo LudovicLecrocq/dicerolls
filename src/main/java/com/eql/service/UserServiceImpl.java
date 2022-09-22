@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     public void saveUser(User user) {
 
         user.setPassword(encoder.encode(user.getPassword()));
-        Role role = roleRepository.findBylabel("ROLE_ADMIN");
+        Role role = roleRepository.findBylabel("ROLE_USER");
 
         if (role == null){
             role = checkRoleExist();
@@ -35,9 +35,8 @@ public class UserServiceImpl implements UserService{
     }
 
     private Role checkRoleExist() {
-
         Role role = new Role();
-        role.setLabel("ROLE_ADMIN");
+        role.setLabel("ROLE_USER");
         return roleRepository.save(role);
 
     }

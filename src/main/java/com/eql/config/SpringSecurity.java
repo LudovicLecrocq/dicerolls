@@ -24,13 +24,14 @@ public class SpringSecurity {
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/index").permitAll()
                 .antMatchers("/users").hasRole("ADMIN")
-                .antMatchers("/perso/**").hasRole("ADMIN")
+                .antMatchers("/perso/**").hasRole("USER")
+                .antMatchers("homepage").hasRole("USER")
                 .and()
                 .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/homepage")
                                 .permitAll()
                 ).logout(
                         logout -> logout

@@ -30,6 +30,9 @@ public class AuthController {
         return "index";
     }
 
+    @GetMapping("/homepage")
+    public String homepage(){return "homepage";}
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         User user = new User();
@@ -42,7 +45,6 @@ public class AuthController {
         if (existingUser!=null && existingUser.getEmail()!=null){
             result.rejectValue("email",null,"Email already in use");
         }
-
         if (result.hasErrors()){
             model.addAttribute("user",user);
             return "register";
@@ -59,7 +61,7 @@ public class AuthController {
     }
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "/login";
     }
 
     @GetMapping("/perso")
