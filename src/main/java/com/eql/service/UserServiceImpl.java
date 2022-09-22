@@ -63,7 +63,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> findAllUser() {
-
         List<User> users = userRepository.findAll();
         return users.stream().map(user -> mapToUserDto(user)).collect(Collectors.toList());
     }
@@ -77,12 +76,10 @@ public class UserServiceImpl implements UserService{
             personnage.setName(dto.getName());
             personnage.setSurname(dto.getSurname());
             persoRepo.save(personnage);
+            userRepository.save(user.get());
         } else {
-
+            throw new RuntimeException("User not found");
         }
-
-
-
     }
 
     private UserDto mapToUserDto(User user){

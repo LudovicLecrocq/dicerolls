@@ -6,7 +6,9 @@ import com.eql.models.User;
 import com.eql.repository.PersoRepo;
 import com.eql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PersoServiceImpl implements  PersoService{
     @Autowired
     PersoRepo repo;
