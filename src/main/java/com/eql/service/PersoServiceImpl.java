@@ -25,6 +25,11 @@ public class PersoServiceImpl implements  PersoService{
     }
 
     @Override
+    public void deletePerso(Personnage perso) {
+        persoRepo.delete(perso);
+    }
+
+    @Override
     public List<Personnage> findAllByUser(Long id) {
         List<Personnage> personnages = persoRepo.findAllByUser(id);
         return personnages;

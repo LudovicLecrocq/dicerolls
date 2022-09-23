@@ -36,7 +36,6 @@
         <tr>
             <th>Name</th>
             <th>Surname</th>
-            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +43,7 @@
             <td th:text = "${perso.name}"></td>
             <td th:text = "${perso.surname}"></td>
             <td><a th:href="@{/showPerso/{id}(id=${perso.id})}" class="btn btn-primary">Update</a></td>
+            <td><a th:href="@{/deletePerso/{id}(id=${perso.id})}" class="btn btn-primary">Delete</a></td>
         </tr>
         </tbody>
     </table>

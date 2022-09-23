@@ -104,6 +104,16 @@ public class AuthController {
         return "showPerso";
     }
 
+    @GetMapping("/deletePerso/{id}")
+    public String deletePerso(@PathVariable(value = "id") Long id, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.findUserByEmail(authentication.getName());
+        Personnage personnage = persoService.findById(id);
+        persoService.deletePerso(personnage);
+        model.addAttribute("persos",persoService.findAllByUser(user.getId()));
+        return "listPerso";
+    }
+
     @PostMapping("/savePerso")
     public String savePerso(@ModelAttribute("perso") Personnage personnage, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
