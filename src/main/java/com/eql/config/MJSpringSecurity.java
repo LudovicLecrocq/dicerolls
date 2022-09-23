@@ -2,6 +2,7 @@ package com.eql.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,14 +12,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SpringSecurity {
-    @Bean
-    public static PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+@Order(2)
+public class MJSpringSecurity {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
+    public SecurityFilterChain filterChain2(HttpSecurity security) throws Exception{
+
         security.csrf().disable()
                 .authorizeHttpRequests()
                 .antMatchers("/register/**").permitAll()
@@ -29,8 +28,8 @@ public class SpringSecurity {
                 .and()
                 .formLogin(
                         form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
+                                .loginPage("/mjLogin")
+                                .loginProcessingUrl("/mjLogin")
                                 .defaultSuccessUrl("/homepage")
                                 .permitAll()
                 ).logout(
