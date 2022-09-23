@@ -5,10 +5,10 @@ import com.eql.models.User;
 import com.eql.repository.PersoRepo;
 import com.eql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersoServiceImpl implements  PersoService{
@@ -28,6 +28,15 @@ public class PersoServiceImpl implements  PersoService{
     public List<Personnage> findAllByUser(Long id) {
         List<Personnage> personnages = persoRepo.findAllByUser(id);
         return personnages;
+    }
+
+    public Personnage findById(Long id){
+        Optional<Personnage> personnage = persoRepo.findById(id);
+        if (personnage.isPresent()){
+            return personnage.get();
+        } else {
+            throw new RuntimeException("Perso not found");
+        }
     }
 
     @Override

@@ -27,26 +27,11 @@
     </div>
 </nav>
 <br /><br /><br />
-<div class="container">
-    <div class="row col-md-10">
-        <h2>Liste des Personnages</h2>
-    </div>
-    <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each = "perso : ${persos}">
-            <td th:text = "${perso.name}"></td>
-            <td th:text = "${perso.surname}"></td>
-            <td><a th:href="@{/showPerso/{id}(id=${perso.id})}" class="btn btn-primary">Update</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<form action="#" th:action="@{/savePerso}"  th:object="${perso}"  method="POST">
+    <input type="hidden" th:field="*{id}">
+    <input type="text" th:field="*{name}" class="form-control mb-4 col-4">
+    <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+    <button type="submit" class="btn btn-info col-2"> Update Perso</button>
+</form>
 </body>
 </html>

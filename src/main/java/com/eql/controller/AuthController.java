@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -96,4 +97,20 @@ public class AuthController {
         return "listPerso";
     }
 
+    @GetMapping("/showPerso/{id}")
+    public String showPerso(@PathVariable(value = "id") Long id, Model model){
+        Personnage personnage = persoService.findById(id);
+        model.addAttribute("perso",personnage);
+        return "showPerso";
+    }
+
+    @PostMapping("/savePerso")
+    public String savePerso(@ModelAttribute("perso") Personnage personnage, Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.findUserByEmail(authentication.getName());
+        personnage.setUser(user);
+        persoService.savePerso(personnage);
+        model.addAttribute("persos",persoService.findAllByUser(user.getId()));
+        return "/listPerso";
+    }
 }

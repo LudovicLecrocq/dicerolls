@@ -10,6 +10,6 @@ public interface PersoService {
     void savePerso(Personnage perso);
 
     List<Personnage> findAllByUser(Long id);
-
+    Personnage findById(Long id);
     User findUserById(Long id);
 }
