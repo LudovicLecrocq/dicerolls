@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Personnnage")
+@Table(name = "Personnage")
 public class Personnage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

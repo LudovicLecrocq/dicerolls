@@ -31,8 +31,11 @@ public class AuthController {
         return "index";
     }
 
-    @GetMapping("/homepage")
-    public String homepage(){return "homepage";}
+    @GetMapping("/mjHomepage")
+    public String mjHomepage(){return "mjHomepage";}
+
+    @GetMapping("/userHomepage")
+    public String userHomepage(){return "userHomepage";}
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
@@ -59,13 +62,11 @@ public class AuthController {
         model.addAttribute("users",users);
         return "users";
     }
-    @GetMapping("/mjLogin")
+    @GetMapping("/login")
     public String login(){
-        return "/mjLogin";
+        return "/login";
     }
 
-    @GetMapping("/userLogin")
-    public String login2(){return "/userLogin";}
 
     @GetMapping("/perso")
     public String per(Model model){
@@ -83,6 +84,16 @@ public class AuthController {
         User user = service.findUserByEmail(authentication.getName());
         perso.setUser(user);
         persoService.savePerso(perso);
-        return "index";
+        return "userHomepage";
     }
+
+    @GetMapping("listPerso")
+    public String listPerso(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.findUserByEmail(authentication.getName());
+        List<Personnage> personnages = persoService.findAllByUser(user.getId());
+        model.addAttribute("persos",personnages);
+        return "listPerso";
+    }
+
 }

@@ -7,9 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PersoRepo extends JpaRepository<Personnage,Long> {
 
-    @Query("From User Where id = :idU ")
-    User findUserById(@Param("idU") long id);
+    @Query(value = "Select * from personnage where user_id = :id",nativeQuery = true)
+    List<Personnage> findAllByUser(@Param("id") Long id);
+
 }

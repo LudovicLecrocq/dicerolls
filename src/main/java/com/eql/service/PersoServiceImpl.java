@@ -5,7 +5,10 @@ import com.eql.models.User;
 import com.eql.repository.PersoRepo;
 import com.eql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PersoServiceImpl implements  PersoService{
@@ -13,10 +16,18 @@ public class PersoServiceImpl implements  PersoService{
     PersoRepo repo;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PersoRepo persoRepo;
 
     @Override
     public void savePerso(Personnage perso) {
         repo.save(perso);
+    }
+
+    @Override
+    public List<Personnage> findAllByUser(Long id) {
+        List<Personnage> personnages = persoRepo.findAllByUser(id);
+        return personnages;
     }
 
     @Override
