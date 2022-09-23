@@ -2,7 +2,6 @@ package com.eql.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,17 +11,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@Order(2)
-public class MJSpringSecurity {
+public class SpringSecurity {
 
     @Bean
-    public SecurityFilterChain filterChain2(HttpSecurity security) throws Exception{
+    public static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception{
 
         security.csrf().disable()
                 .authorizeHttpRequests()
                 .antMatchers("/register/**").permitAll()
                 .antMatchers("/index").permitAll()
-                .antMatchers("/users").hasRole("ADMIN")
+                .antMatchers("/users").hasRole("MJ")
                 .antMatchers("/perso/**").hasRole("USER")
                 .antMatchers("homepage").hasRole("USER")
                 .and()
@@ -30,7 +32,7 @@ public class MJSpringSecurity {
                         form -> form
                                 .loginPage("/mjLogin")
                                 .loginProcessingUrl("/mjLogin")
-                                .defaultSuccessUrl("/homepage")
+                                .successHandler(new SecurityHandler())
                                 .permitAll()
                 ).logout(
                         logout -> logout

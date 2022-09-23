@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -52,22 +53,19 @@ public class AuthController {
         service.saveUser(user);
         return "redirect:/index?success";
     }
-
     @GetMapping("/users")
     public String users(Model model){
         List<User> users = service.findAllUser();
         model.addAttribute("users",users);
         return "users";
     }
-    @GetMapping("/userLogin")
-    public String login(){
-        return "/userLogin";
-    }
-
     @GetMapping("/mjLogin")
-    public String login2(){
+    public String login(){
         return "/mjLogin";
     }
+
+    @GetMapping("/userLogin")
+    public String login2(){return "/userLogin";}
 
     @GetMapping("/perso")
     public String per(Model model){
