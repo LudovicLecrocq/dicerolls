@@ -4,3 +4,7 @@ INSERT INTO users (email, first_name, last_name, login, password) VALUES ("user@
 INSERT INTO users (email, first_name, last_name, login, password) VALUES ("admin@admin", "first", "last", "login", "$2a$10$2bRRHTn8uiDZkm61INmv2uw.LPooGWAzJal3n2OLc/fORsY7j9Z8a")
 INSERT INTO users_roles (user_id, role_id) VALUES (1,1)
 INSERT INTO users_roles (user_id, role_id) VALUES (2,2)
+INSERT INTO race (label, info, str_Bon, dex_Bon, con_Bon, int_Bon, wis_Bon, cha_Bon) VALUES ("Nain_des_Montagnes", "info Nain", 2,0,2,0,0,0)
+INSERT INTO race (label, info, str_Bon, dex_Bon, con_Bon, int_Bon, wis_Bon, cha_Bon) VALUES ("Haut_Elfe", "info Elfe",0,2,0,1,0,0)
+INSERT INTO race (label, info, str_Bon, dex_Bon, con_Bon, int_Bon, wis_Bon, cha_Bon) VALUES ("Humain", "info Humain",1,1,1,1,1,1)
+INSERT INTO race (label, info, str_Bon, dex_Bon, con_Bon, int_Bon, wis_Bon, cha_Bon) VALUES ("Orc", "info Orc", 2,0,1,0,0,0)

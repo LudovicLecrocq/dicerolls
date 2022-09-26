@@ -28,9 +28,11 @@
 </nav>
 <br /><br /><br />
 <form action="#" th:action="@{/savePerso}"  th:object="${perso}"  method="POST">
-    <input type="hidden" th:field="*{id}">
-    <input type="text" th:field="*{name}" class="form-control mb-4 col-4">
-    <input type="text" th:field="*{surname}" class="form-control mb-4 col-4">
+    <input type="hidden" th:field="${perso.id}">
+    <input type="text" th:field="${perso.name}" class="form-control mb-4 col-4">
+    <input type="text" th:field="${perso.surname}" class="form-control mb-4 col-4">
+    <input type="hidden" th:field="${perso.stat}">
+    <input type="hidden" th:field="${perso.equipement}">
     <button type="submit" class="btn btn-info col-2"> Update Perso</button>
 </form>
 </body>

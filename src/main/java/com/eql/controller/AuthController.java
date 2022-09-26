@@ -2,8 +2,12 @@ package com.eql.controller;
 
 
 import com.eql.models.Personnage;
+import com.eql.models.Race;
+import com.eql.models.Stat;
 import com.eql.models.User;
 import com.eql.service.PersoService;
+import com.eql.service.RaceService;
+import com.eql.service.StatService;
 import com.eql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -26,6 +30,10 @@ public class AuthController {
     UserService service;
     @Autowired
     PersoService persoService;
+    @Autowired
+    StatService statService;
+    @Autowired
+    RaceService raceService;
 
     @GetMapping("/index")
     public String home(){
@@ -72,19 +80,24 @@ public class AuthController {
     @GetMapping("/perso")
     public String per(Model model){
         Personnage perso = new Personnage();
+        List<Race> races = raceService.findAll();
         model.addAttribute("perso",perso);
+        model.addAttribute("races",races);
         return "perso";
     }
     @PostMapping("/perso/save")
     public  String perso(@Valid @ModelAttribute("perso") Personnage perso, BindingResult result, Model model){
+        System.out.println( "****************************************" + perso.getRace());
         if(result.hasErrors()){
-            model.addAttribute(perso);
+            List<Race> races = raceService.findAll();
+            model.addAttribute("races",races);
+            model.addAttribute("perso",perso);
             return "perso";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.findUserByEmail(authentication.getName());
         perso.setUser(user);
-        persoService.savePerso(perso);
+        persoService.firstSave(perso);
         return "userHomepage";
     }
 
@@ -122,5 +135,24 @@ public class AuthController {
         persoService.savePerso(personnage);
         model.addAttribute("persos",persoService.findAllByUser(user.getId()));
         return "/listPerso";
+    }
+    @GetMapping("/viewStat/{id}")
+    public String showStat(@PathVariable(value = "id") Long id, Model model){
+        Stat stat = statService.findByPersoId(id);
+        model.addAttribute("stat",stat);
+        return "statView";
+    }
+
+    @PostMapping("/saveStat")
+    public String saveStat(@ModelAttribute("stat")Stat stat, Model model){
+        statService.saveStat(stat);
+        model.addAttribute("stat",stat);
+        return "/statView";
+    }
+
+    @GetMapping("/raceInfo/{race}")
+    public String showRaceInfo(@PathVariable(value = "race") String race, Model model){
+        model.addAttribute("race", raceService.findByLabel(race));
+        return "/raceInfo";
     }
 }

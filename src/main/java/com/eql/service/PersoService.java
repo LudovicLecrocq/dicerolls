@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface PersoService {
 
+    void firstSave(Personnage personnage);
     void savePerso(Personnage perso);
 
     void deletePerso(Personnage perso);

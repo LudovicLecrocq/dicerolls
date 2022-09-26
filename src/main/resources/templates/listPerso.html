@@ -36,14 +36,17 @@
         <tr>
             <th>Name</th>
             <th>Surname</th>
+            <th>Race</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each = "perso : ${persos}">
             <td th:text = "${perso.name}"></td>
             <td th:text = "${perso.surname}"></td>
+            <td><a th:href="@{/raceInfo/{race}(race=${perso.race.label})}" th:text = "${perso.race.label}"></a></td>
             <td><a th:href="@{/showPerso/{id}(id=${perso.id})}" class="btn btn-primary">Update</a></td>
             <td><a th:href="@{/deletePerso/{id}(id=${perso.id})}" class="btn btn-primary">Delete</a></td>
+            <td><a th:href="@{/viewStat/{id}(id=${perso.id})}" class="btn btn-primary">Statistique</a></td>
         </tr>
         </tbody>
     </table>

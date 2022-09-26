@@ -72,6 +72,16 @@
                         <p th:errors = "*{surname}" class="text-danger"
                            th:if="${#fields.hasErrors('surname')}"></p>
                     </div>
+
+                    <div class="form-group m-3">
+                        <label class="form-label">Race</label>
+                        <br/>
+                        <select name="race" id="race-select" th:field="${perso.race}">
+                            <option value="">Choose a race</option>
+                            <option th:each=" race: ${races}" th:value="${race.id}" th:text="${race.label}"></option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
