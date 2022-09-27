@@ -231,5 +231,21 @@ public class AuthController {
         return "/raceInfo";
     }
 
+    @GetMapping("/enterSession")
+    public String enterSession(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.findUserByEmail(authentication.getName());
+        List<Personnage> personnages = persoService.findAllByUser(user.getId());
+        model.addAttribute("persos",personnages);
+        List<Session> sessions = sessionService.findAll();
+        model.addAttribute("sessions",sessions);
+        Personnage personnage = new Personnage();
+        Session session = new Session();
+        model.addAttribute("sessionE",session);
+        model.addAttribute("persoP",personnage);
+        return "enterSession";
+    }
 
-}
+
+
+    }

@@ -77,7 +77,7 @@
                         <label class="form-label">Race</label>
                         <br/>
                         <select name="race" id="race-select" th:field="${perso.race}">
-                            <option value="">Choose a race</option>-
+                            <option value="">Choose a race</option>
                             <option th:each=" race: ${races}" th:value="${race.id}" th:text="${race.label}"></option>
                         </select>
                     </div>
