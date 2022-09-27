@@ -24,7 +24,7 @@ public class Armour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    private String name;
+    private String aName;
     private Long defValue;
 
     @ManyToMany(mappedBy = "armours")

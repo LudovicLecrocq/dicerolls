@@ -77,8 +77,26 @@
                         <label class="form-label">Race</label>
                         <br/>
                         <select name="race" id="race-select" th:field="${perso.race}">
-                            <option value="">Choose a race</option>
+                            <option value="">Choose a race</option>-
                             <option th:each=" race: ${races}" th:value="${race.id}" th:text="${race.label}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label class="form-label">Weapons</label>
+                        <br/>
+                        <select name="weapon" id="weapon-select" th:field="${weaponP.wName}">
+                            <option value="">Choose a weapon</option>
+                            <option th:each=" weapon: ${weapons}" th:value="${weapon.wName}" th:text="${weapon.wName}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group m-3">
+                        <label class="form-label">Armours</label>
+                        <br/>
+                        <select name="weapon" id="armour-select" th:field="${armourP.aName}">
+                            <option value="">Choose an armour</option>
+                            <option th:each=" armour: ${armours}" th:value="${armour.aName}" th:text="${armour.aName}"></option>
                         </select>
                     </div>
 

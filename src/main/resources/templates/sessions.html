@@ -13,12 +13,15 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/userHomepage}">Registration and Login System</a>
+        <a class="navbar-brand" th:href="@{/mjHomepage}">Registration and Login System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/newSession}">New sessions</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
                 </li>
@@ -29,25 +32,18 @@
 <br /><br /><br />
 <div class="container">
     <div class="row col-md-10">
-        <h2>Liste des Personnages</h2>
+        <h2>Sessions</h2>
     </div>
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Race</th>
+            <th>Session</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each = "perso : ${persos}">
-            <td th:text = "${perso.name}"></td>
-            <td th:text = "${perso.surname}"></td>
-            <td><a th:href="@{/raceInfo/{race}(race=${perso.race.label})}" th:text = "${perso.race.label}"></a></td>
-            <td><a th:href="@{/showPerso/{id}(id=${perso.id})}" class="btn btn-primary">Update</a></td>
-            <td><a th:href="@{/deletePerso/{id}(id=${perso.id})}" class="btn btn-primary">Delete</a></td>
-            <td><a th:href="@{/viewStat/{id}(id=${perso.id})}" class="btn btn-primary">Statistique</a></td>
-            <td><a th:href="@{/viewEquip/{id}(id=${perso.id})}" class="btn btn-primary">Equipement</a></td>
+        <tr th:each = "sessionGame : ${sessions}">
+            <td th:text = "${sessionGame.sName}"></td>
+            <td><a th:href="@{/viewSession/{id}(id=${sessionGame.id})}" class="btn btn-primary">Users</a></td>
         </tr>
         </tbody>
     </table>

@@ -1,5 +1,6 @@
 package com.eql.service;
 
+import com.eql.models.Equipement;
 import com.eql.models.Personnage;
 import com.eql.models.Stat;
 import com.eql.models.User;

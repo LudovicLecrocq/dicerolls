@@ -1,14 +1,22 @@
 package com.eql.controller;
 
 
+import com.eql.models.Armour;
+import com.eql.models.Equipement;
 import com.eql.models.Personnage;
 import com.eql.models.Race;
+import com.eql.models.Session;
 import com.eql.models.Stat;
 import com.eql.models.User;
+import com.eql.models.Weapon;
+import com.eql.service.ArmourService;
+import com.eql.service.EquipmentService;
 import com.eql.service.PersoService;
 import com.eql.service.RaceService;
+import com.eql.service.SessionService;
 import com.eql.service.StatService;
 import com.eql.service.UserService;
+import com.eql.service.WeaponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +27,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -34,6 +41,14 @@ public class AuthController {
     StatService statService;
     @Autowired
     RaceService raceService;
+    @Autowired
+    EquipmentService equipmentService;
+    @Autowired
+    WeaponService weaponService;
+    @Autowired
+    ArmourService armourService;
+    @Autowired
+    SessionService sessionService;
 
     @GetMapping("/index")
     public String home(){
@@ -76,27 +91,77 @@ public class AuthController {
         return "/login";
     }
 
+    @GetMapping("/sessions")
+    public String sessions(Model model){
+        List<Session> sessions = sessionService.findAll();
+        model.addAttribute("sessions",sessions);
+        return "sessions";
+    }
+
+    @GetMapping("/newSession")
+    public String newSession(Model model){
+        Session session = new Session();
+        model.addAttribute("sessionGame",session);
+        return "newSession";
+    }
+
+    @GetMapping("/viewSession/{id}")
+    public String viewSession(@PathVariable(value = "id")Long id, Model model){
+        Session session = sessionService.findById(id);
+        List<Personnage> personnages = session.getPersonnages();
+        model.addAttribute("persos",personnages);
+        return "viewSession";
+    }
+
+    @PostMapping("/session/save")
+    public String saveSession(@ModelAttribute("sessionGame") Session session, BindingResult result, Model model){
+        if (result.hasErrors()){
+            Session session1 = new Session();
+            model.addAttribute("sessionGame",session1);
+            return "newSession";
+        }
+
+        sessionService.saveSession(session);
+        List<Session> sessions = sessionService.findAll();
+        model.addAttribute("sessions",sessions);
+        return "sessions";
+    }
 
     @GetMapping("/perso")
     public String per(Model model){
         Personnage perso = new Personnage();
         List<Race> races = raceService.findAll();
+        List<Weapon> weapons = weaponService.findAll();
+        List<Armour> armours = armourService.findAll();
+        Weapon weaponP = new Weapon();
+        Armour armourP = new Armour();
         model.addAttribute("perso",perso);
         model.addAttribute("races",races);
+        model.addAttribute("weapons",weapons);
+        model.addAttribute("armours",armours);
+        model.addAttribute("weaponP",weaponP);
+        model.addAttribute("armourP",armourP);
         return "perso";
     }
     @PostMapping("/perso/save")
-    public  String perso(@Valid @ModelAttribute("perso") Personnage perso, BindingResult result, Model model){
-        System.out.println( "****************************************" + perso.getRace());
+    public  String perso(@Valid @ModelAttribute("perso") Personnage perso, @ModelAttribute("weaponP")Weapon weaponP, @ModelAttribute("armourP") Armour armourP, BindingResult result, Model model){
         if(result.hasErrors()){
             List<Race> races = raceService.findAll();
             model.addAttribute("races",races);
             model.addAttribute("perso",perso);
             return "perso";
         }
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.findUserByEmail(authentication.getName());
         perso.setUser(user);
+        Equipement equipement = new Equipement();
+        perso.setEquipment(equipement);
+
+        Armour armour = armourService.findByName(armourP.getAName());
+        Weapon weapon = weaponService.findByName(weaponP.getWName());
+        perso.getEquipment().getArmours().add(armour);
+        perso.getEquipment().getWeapons().add(weapon);
         persoService.firstSave(perso);
         return "userHomepage";
     }
@@ -143,6 +208,16 @@ public class AuthController {
         return "statView";
     }
 
+    @GetMapping("/viewEquip/{id}")
+    public String showEquip(@PathVariable(value = "id") Long id, Model model){
+        Equipement equipement = equipmentService.findByPersoId(id);
+        List<Weapon> weapons = equipmentService.findAllWeapon(equipement.getId());
+        List<Armour> armours = equipmentService.findAllArmour(equipement.getId());
+        model.addAttribute("weapons",weapons);
+        model.addAttribute("armours",armours);
+        return "equipView";
+    }
+
     @PostMapping("/saveStat")
     public String saveStat(@ModelAttribute("stat")Stat stat, Model model){
         statService.saveStat(stat);
@@ -155,4 +230,6 @@ public class AuthController {
         model.addAttribute("race", raceService.findByLabel(race));
         return "/raceInfo";
     }
+
+
 }

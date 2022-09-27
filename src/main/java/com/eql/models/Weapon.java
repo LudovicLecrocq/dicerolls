@@ -24,11 +24,18 @@ public class Weapon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    private String name;
+    private String wName;
     private Long atqValue;
-
 
     @ManyToMany(mappedBy = "weapons")
     private List<Equipement> equipements = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Weapon{" +
+                "id=" + id +
+                ", name='" + wName + '\'' +
+                ", atqValue=" + atqValue +
+                '}';
+    }
 }

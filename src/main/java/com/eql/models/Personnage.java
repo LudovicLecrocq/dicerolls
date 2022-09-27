@@ -12,10 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,9 +36,9 @@ public class Personnage {
     @ManyToOne
     private User user;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "equipement_id", referencedColumnName = "id")
-    Equipement equipement;
+    Equipement equipment;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "stat_id", referencedColumnName = "id")
@@ -49,5 +46,7 @@ public class Personnage {
     @ManyToOne
     @JoinColumn(name = "race_id", referencedColumnName = "id")
     Race race;
-
+    @ManyToOne
+    @JoinColumn(name = "session_id", referencedColumnName = "id")
+    Session session;
 }

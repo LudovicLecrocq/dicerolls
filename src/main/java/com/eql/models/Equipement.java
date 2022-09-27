@@ -29,7 +29,7 @@ public class Equipement {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne(mappedBy = "equipement")
+    @OneToOne(mappedBy = "equipment")
     private Personnage personnage;
 
     @ManyToMany(cascade = CascadeType.PERSIST)

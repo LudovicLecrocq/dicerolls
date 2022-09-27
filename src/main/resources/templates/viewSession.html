@@ -20,20 +20,33 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/sessions}">Sessions</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<br /><br />
+<br /><br /><br />
 <div class="container">
-  <div class="row">
-    <h1 class="text-center"> Registration and Login System </h1>
+  <div class="row col-md-10">
+    <h2>Characters</h2>
   </div>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Race</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "perso : ${persos}">
+      <td th:text = "${perso.name}"></td>
+      <td th:text = "${perso.surname}"></td>
+      <td><a th:href="@{/raceInfo/{race}(race=${perso.race.label})}" th:text = "${perso.race.label}"></a></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 </body>
 </html>
