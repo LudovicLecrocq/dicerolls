@@ -49,4 +49,13 @@ public class Personnage {
     @ManyToOne
     @JoinColumn(name = "session_id", referencedColumnName = "id")
     Session session;
+
+    @Override
+    public String toString() {
+        return "Personnage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
+    }
 }

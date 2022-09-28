@@ -32,4 +32,9 @@ public class SessionServiceImpl implements SessionService{
             throw new RuntimeException("Session not found");
         }
     }
+
+    @Override
+    public Session findBySName(String sName) {
+        return sessionRepo.findBySName(sName);
+    }
 }

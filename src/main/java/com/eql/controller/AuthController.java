@@ -245,7 +245,12 @@ public class AuthController {
         model.addAttribute("persoP",personnage);
         return "enterSession";
     }
-
-
-
+    @PostMapping("/session/enter")
+    public String sessionE(@ModelAttribute(value = "sessionE") Session sessionE, @ModelAttribute(value = "persoP") Personnage persoP, Model model){
+        Session session = sessionService.findBySName(sessionE.getSName());
+        Personnage personnage = persoService.findByName(persoP.getName());
+        personnage.setSession(session);
+        persoService.savePerso(personnage);
+        return "redirect:/userHomepage?create";
     }
+}

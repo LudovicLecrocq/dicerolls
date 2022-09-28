@@ -25,8 +25,8 @@ public class PersoServiceImpl implements  PersoService{
 
     @Override
     public void firstSave(Personnage personnage) {
-        Stat stat = new Stat(0,0,personnage.getRace().getStrBon(),personnage.getRace().getDexBon(),personnage.getRace().getConBon(),personnage.getRace().getIntBon()
-                ,personnage.getRace().getWisBon(),personnage.getRace().getChaBon(),personnage);
+        Stat stat = new Stat(10,10,personnage.getRace().getStrBon()+4,personnage.getRace().getDexBon()+4,personnage.getRace().getConBon()+4,personnage.getRace().getIntBon()+4
+                ,personnage.getRace().getWisBon()+4,personnage.getRace().getChaBon()+4,personnage);
         personnage.setStat(stat);
         persoRepo.save(personnage);
     }
@@ -43,8 +43,7 @@ public class PersoServiceImpl implements  PersoService{
 
     @Override
     public List<Personnage> findAllByUser(Long id) {
-        List<Personnage> personnages = persoRepo.findAllByUser(id);
-        return personnages;
+        return persoRepo.findAllByUser(id);
     }
 
     public Personnage findById(Long id){
@@ -57,7 +56,8 @@ public class PersoServiceImpl implements  PersoService{
     }
 
     @Override
-    public User findUserById(Long id) {
-        return userRepository.findById(id).get();
+    public Personnage findByName(String name) {
+        return persoRepo.findByName(name);
     }
+
 }

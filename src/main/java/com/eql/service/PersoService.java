@@ -14,5 +14,5 @@ public interface PersoService {
 
     List<Personnage> findAllByUser(Long id);
     Personnage findById(Long id);
-    User findUserById(Long id);
+    Personnage findByName(String name);
 }

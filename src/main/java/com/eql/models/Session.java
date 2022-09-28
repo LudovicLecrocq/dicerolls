@@ -32,4 +32,12 @@ public class Session {
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "session")
     private List<Personnage> personnages = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Session{" +
+                "id=" + id +
+                ", sName='" + sName + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

@@ -4,7 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Registration and Login System</title>
+    <title>DiceRolls</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -13,7 +13,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/userHomepage}">Registration and Login System</a>
+        <a class="navbar-brand" th:href="@{/userHomepage}">Homepage</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,9 +45,9 @@
             <td th:text = "${perso.surname}"></td>
             <td><a th:href="@{/raceInfo/{race}(race=${perso.race.label})}" th:text = "${perso.race.label}"></a></td>
             <td><a th:href="@{/showPerso/{id}(id=${perso.id})}" class="btn btn-primary">Update</a></td>
-            <td><a th:href="@{/deletePerso/{id}(id=${perso.id})}" class="btn btn-primary">Delete</a></td>
             <td><a th:href="@{/viewStat/{id}(id=${perso.id})}" class="btn btn-primary">Statistique</a></td>
             <td><a th:href="@{/viewEquip/{id}(id=${perso.id})}" class="btn btn-primary">Equipement</a></td>
+            <td><a th:href="@{/deletePerso/{id}(id=${perso.id})}" class="btn btn-primary">Delete</a></td>
         </tr>
         </tbody>
     </table>
