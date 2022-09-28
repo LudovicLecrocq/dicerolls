@@ -20,32 +20,30 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/perso}">New Character</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/listPerso}">My Characters</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/enterSession}">Enter Session</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/playSession}">Play Session</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<br /><br />
+<br /><br /><br />
 <div class="container">
-  <div th:if="${param.create}">
-    <div class="alert alert-success"> Successfully enter the session</div>
+  <div class="row col-md-10">
+    <h2>Sessions</h2>
   </div>
-  <div class="row">
-    <h1 class="text-center"> Your HomePage </h1>
-  </div>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+    <tr>
+      <th>Session</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each = "sessionGame : ${sessions}">
+      <td th:text = "${sessionGame.sName}"></td>
+      <td><a th:href="@{/play/{id}(id=${sessionGame.id})}" class="btn btn-primary">Play</a></td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 </body>
 </html>

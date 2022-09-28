@@ -60,4 +60,9 @@ public class PersoServiceImpl implements  PersoService{
         return persoRepo.findByName(name);
     }
 
+    @Override
+    public Personnage findBySession(Long id) {
+        return persoRepo.findBySessionId(id);
+    }
+
 }

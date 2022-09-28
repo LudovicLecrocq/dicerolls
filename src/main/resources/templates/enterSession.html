@@ -44,7 +44,7 @@
           <div class="form-group m-3">
             <label class="form-label">Session</label>
             <br/>
-            <select name="session" id="session-select" th:field="${sessionE.sName}">
+            <select name="session" id="session-select" th:field="${sessionE.sName}" required>
               <option value="">Choose a session</option>
               <option th:each=" sessionGame: ${sessions}" th:value="${sessionGame.sName}" th:text="${sessionGame.sName}"></option>
             </select>
@@ -53,7 +53,7 @@
           <div class="form-group m-3">
             <label class="form-label">Choose your character to enter the session</label>
             <br/>
-            <select name="chara" id="chara-select" th:field="${persoP.name}">
+            <select name="chara" id="chara-select" th:field="${persoP.name}" required>
               <option value="">Choose a character</option>
               <option th:each=" perso: ${persos}" th:value="${perso.name}" th:text="${perso.name}"></option>
             </select>

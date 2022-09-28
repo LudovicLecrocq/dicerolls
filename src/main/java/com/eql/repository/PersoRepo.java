@@ -18,5 +18,7 @@ public interface PersoRepo extends JpaRepository<Personnage,Long> {
 
     @Query(value = "Select * from personnage where nom = :pName",nativeQuery = true)
     Personnage findByName(@Param("pName")String sName);
+    @Query(value = "Select * from personnage where session_id = :sId",nativeQuery = true)
+    Personnage findBySessionId(@Param(value = "sId") Long id);
 
 }

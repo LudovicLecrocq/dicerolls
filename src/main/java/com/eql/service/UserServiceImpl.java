@@ -1,13 +1,17 @@
 package com.eql.service;
 
+import com.eql.models.Personnage;
 import com.eql.models.Role;
+import com.eql.models.Session;
 import com.eql.models.User;
+import com.eql.repository.PersoRepo;
 import com.eql.repository.RoleRepository;
 import com.eql.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +22,8 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    PersoRepo persoRepo;
     @Autowired
     PasswordEncoder encoder;
 
@@ -51,5 +57,14 @@ public class UserServiceImpl implements UserService{
         return users;
     }
 
+    @Override
+    public List<Session> findMySessions(Long id) {
+        List<Personnage> personnages = persoRepo.findAllByUser(id);
+        List<Session> sessions = new ArrayList<>();
+        for (Personnage personnage : personnages) {
+            sessions.add(personnage.getSession());
+        }
+        return sessions;
+    }
 
 }

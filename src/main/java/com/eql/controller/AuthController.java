@@ -2,6 +2,7 @@ package com.eql.controller;
 
 
 import com.eql.models.Armour;
+import com.eql.models.Enemy;
 import com.eql.models.Equipement;
 import com.eql.models.Personnage;
 import com.eql.models.Race;
@@ -10,6 +11,7 @@ import com.eql.models.Stat;
 import com.eql.models.User;
 import com.eql.models.Weapon;
 import com.eql.service.ArmourService;
+import com.eql.service.EnemyService;
 import com.eql.service.EquipmentService;
 import com.eql.service.PersoService;
 import com.eql.service.RaceService;
@@ -49,6 +51,8 @@ public class AuthController {
     ArmourService armourService;
     @Autowired
     SessionService sessionService;
+    @Autowired
+    EnemyService enemyService;
 
     @GetMapping("/index")
     public String home(){
@@ -252,5 +256,43 @@ public class AuthController {
         personnage.setSession(session);
         persoService.savePerso(personnage);
         return "redirect:/userHomepage?create";
+    }
+
+    @GetMapping("/playSession")
+    public String playSession(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = service.findUserByEmail(authentication.getName());
+        List<Session> sessions = service.findMySessions(user.getId());
+        model.addAttribute("sessions",sessions);
+
+        return "playSession";
+    }
+
+    @GetMapping("/play/{id}")
+    public String play(@PathVariable(value = "id") Long id, Model model){
+        Session session = sessionService.findById(id);
+        List<Enemy> enemies = enemyService.findAll();
+        model.addAttribute("enemies",enemies);
+        Personnage personnage = persoService.findBySession(id);
+        model.addAttribute("perso",personnage);
+        Equipement equipement = equipmentService.findByPersoId(personnage.getId());
+        List<Weapon> weapons = equipement.getWeapons();
+        List<Armour> armours = equipement.getArmours();
+        model.addAttribute("weapons",weapons);
+        model.addAttribute("armours",armours);
+        Enemy enemy = new Enemy();
+        model.addAttribute("enemyB",enemy);
+        return "play";
+    }
+
+    @PostMapping("/battle/start")
+    public String battle(@ModelAttribute("perso") Personnage personnage, @ModelAttribute("enemyB") Enemy enemy, Model model){
+        Personnage personnage1 = persoService.findById(personnage.getId());
+        Enemy enemy1 = enemyService.findByName(enemy.getEName());
+        Stat stat = personnage1.getStat();
+        model.addAttribute("perso",personnage1);
+        model.addAttribute("enemy",enemy1);
+        model.addAttribute("stat",stat);
+        return "battle";
     }
 }
