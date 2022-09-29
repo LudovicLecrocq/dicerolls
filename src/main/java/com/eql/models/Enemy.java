@@ -20,14 +20,14 @@ public class Enemy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long eId;
     private String eName;
     private Long ehp;
 
     @Override
     public String toString() {
         return "Enemy{" +
-                "id=" + id +
+                "id=" + eId +
                 ", eName='" + eName + '\'' +
                 ", ehp=" + ehp +
                 '}';

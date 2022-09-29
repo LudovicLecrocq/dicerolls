@@ -82,6 +82,9 @@
         </div>
       </div>
     </div>
+    <div th:object="${session}">
+      <input type="hidden" th:field="${session.sessionId}">
+    </div>
   </form>
 </div>
 </body>

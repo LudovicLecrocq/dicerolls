@@ -13,4 +13,8 @@ public interface EquipmentService {
     List<Weapon> findAllWeapon(Long id);
     List<Armour> findAllArmour(Long id);
 
+    int findArmorValue(Long id);
+
+    int findAtqValue(Long id);
+
 }

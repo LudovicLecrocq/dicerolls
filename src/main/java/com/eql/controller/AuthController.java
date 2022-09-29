@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class AuthController {
@@ -282,17 +283,60 @@ public class AuthController {
         model.addAttribute("armours",armours);
         Enemy enemy = new Enemy();
         model.addAttribute("enemyB",enemy);
+        model.addAttribute("session",session);
         return "play";
     }
 
     @PostMapping("/battle/start")
-    public String battle(@ModelAttribute("perso") Personnage personnage, @ModelAttribute("enemyB") Enemy enemy, Model model){
+    public String battle(@ModelAttribute("perso") Personnage personnage, @ModelAttribute("enemyB") Enemy enemy, @ModelAttribute("session") Session session, Model model){
+        Session session1 = sessionService.findById(session.getSessionId());
         Personnage personnage1 = persoService.findById(personnage.getId());
         Enemy enemy1 = enemyService.findByName(enemy.getEName());
         Stat stat = personnage1.getStat();
+        Equipement equipement = personnage1.getEquipment();
         model.addAttribute("perso",personnage1);
         model.addAttribute("enemy",enemy1);
         model.addAttribute("stat",stat);
+        int armourValue = equipmentService.findArmorValue(equipement.getId());
+        int atqValue = equipmentService.findAtqValue(equipement.getId());
+        model.addAttribute("atq",atqValue);
+        model.addAttribute("arm",armourValue);
+        model.addAttribute("session",session1);
+        return "battle";
+    }
+
+    @PostMapping("/battle/atq")
+    public String atq(@ModelAttribute("perso") Personnage personnage, @ModelAttribute("enemy") Enemy enemy, @ModelAttribute("stat") Stat stat, @ModelAttribute("session") Session session, Model model){
+        Session session1 = sessionService.findById(session.getSessionId());
+        Long id = session1.getSessionId();
+        Equipement equipement = personnage.getEquipment();
+        int armourValue = equipmentService.findArmorValue(equipement.getId());
+        int atqValue = equipmentService.findAtqValue(equipement.getId());
+        Random rand = new Random();
+        int damageP = rand.nextInt(atqValue+1);
+        enemy.setEhp(enemy.getEhp()-damageP);
+        if (enemy.getEhp()<=0){
+            model.addAttribute("id",id);
+            List<Enemy> enemies = enemyService.findAll();
+            model.addAttribute("enemies",enemies);
+            Personnage personnage1 = persoService.findBySession(id);
+            model.addAttribute("perso",personnage1);
+            Equipement equipement1 = equipmentService.findByPersoId(personnage.getId());
+            List<Weapon> weapons = equipement1.getWeapons();
+            List<Armour> armours = equipement1.getArmours();
+            model.addAttribute("weapons",weapons);
+            model.addAttribute("armours",armours);
+            Enemy enemy1 = new Enemy();
+            model.addAttribute("enemyB",enemy1);
+            model.addAttribute("session",session);
+            return "play";
+        }
+        model.addAttribute("atq",atqValue);
+        model.addAttribute("arm",armourValue);
+        model.addAttribute("perso",personnage);
+        model.addAttribute("enemy",enemy);
+        model.addAttribute("stat",stat);
+        model.addAttribute("session",session1);
         return "battle";
     }
 }

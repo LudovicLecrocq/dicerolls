@@ -21,7 +21,7 @@ public class Stat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Long sId;
 
     private int maxHP;
     private int hp;
@@ -50,7 +50,7 @@ public class Stat {
     @Override
     public String toString() {
         return "Stat{" +
-                "id=" + id +
+                "id=" + sId +
                 ", maxHP=" + maxHP +
                 ", hp=" + hp +
                 ", strenght=" + strenght +

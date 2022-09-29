@@ -5,4 +5,5 @@ import java.util.List;
 public interface EnemyService {
     Enemy findByName(String name);
     List<Enemy> findAll();
+
 }

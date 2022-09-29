@@ -40,7 +40,7 @@
     <tbody>
     <tr th:each = "sessionGame : ${sessions}">
       <td th:text = "${sessionGame.sName}"></td>
-      <td><a th:href="@{/play/{id}(id=${sessionGame.id})}" class="btn btn-primary">Play</a></td>
+      <td><a th:href="@{/play/{id}(id=${sessionGame.sessionId})}" class="btn btn-primary">Play</a></td>
     </tr>
     </tbody>
   </table>

@@ -24,7 +24,7 @@ public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long sessionId;
 
     private String sName;
     private String password;
@@ -35,7 +35,7 @@ public class Session {
     @Override
     public String toString() {
         return "Session{" +
-                "id=" + id +
+                "id=" + sessionId +
                 ", sName='" + sName + '\'' +
                 ", password='" + password + '\'' +
                 '}';

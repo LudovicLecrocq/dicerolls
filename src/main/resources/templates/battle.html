@@ -28,16 +28,29 @@
 </nav>
 <br/><br/><br/>
 <div class="container">
-    <form action="#" th:action="@{/battle/start}"  th:object="${perso}"  method="POST">
+    <form action="#" th:action="@{/battle/atq}"  th:object="${perso}"  method="POST">
+        <input type="hidden" th:field="${perso.id}">
+        <input type="hidden" th:field="${perso.name}">
+        <input type="hidden" th:field="${perso.surname}">
+        <input type="hidden" th:field="${perso.user}">
+        <input type="hidden" th:field="${perso.equipment}">
+        <input type="hidden" th:field="${perso.stat}">
+        <input type="hidden" th:field="${perso.race}">
+        <input type="hidden" th:field="${perso.session}">
         <div class="row col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">Play</h2>
+                    <h2 class="text-center">Battle</h2>
                     <div class="card-body">
                         <div class="form-group m-3">
                             <label  th:text="'My Character : ' + ${perso.name}"></label>
                             <label class="form-label" th:text="${perso.surname}"></label>
                             <label class="form-label" th:text="'HP : ' + ${stat.hp}"></label>
+                            <label class="form-label" th:text="' / ' + ${stat.maxHP}"></label>
+                        </div>
+                        <div class="form-group m-3">
+                            <label class="form-label" th:text="'Attack value : ' + ${atq}"></label>
+                            <label class="form-label" th:text="'Armour value : ' + ${arm}"></label>
                         </div>
                         <div class="form-group m-3">
                             <label class="form-label" th:text="'Enemy : ' + ${enemy.eName}"></label>
@@ -49,6 +62,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div th:object="${enemy}">
+            <input type="hidden" th:field="${enemy.eId}">
+            <input type="hidden" th:field="${enemy.eName}">
+            <input type="hidden" th:field="${enemy.ehp}">
+        </div>
+        <div th:object="${stat}">
+            <input type="hidden" th:field="${stat.sId}">
+            <input type="hidden" th:field="${stat.hp}">
+        </div>
+        <div th:object="${session}">
+            <input type="hidden" th:field="${session.sessionId}">
         </div>
     </form>
 </div>
