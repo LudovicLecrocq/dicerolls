@@ -112,7 +112,14 @@
                         <p th:errors = "*{password}" class="text-danger"
                            th:if="${#fields.hasErrors('password')}"></p>
                     </div>
-
+                    <div class="form-group mb-3">
+                        <label class="form-label">Role</label>
+                        <br/>
+                        <select name="role" id="role-select" th:field="${role.label}">
+                            <option value="">Choose a role</option>
+                            <option th:each=" role: ${roles}" th:value="${role.label}" th:text="${role.label}"></option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <button class="btn btn-primary" type="submit">Register</button>
                     </div>

@@ -6,6 +6,8 @@ import com.eql.models.Enemy;
 import com.eql.models.Equipement;
 import com.eql.models.Personnage;
 import com.eql.models.Race;
+import com.eql.models.Role;
+import com.eql.models.RoleChoose;
 import com.eql.models.Session;
 import com.eql.models.Stat;
 import com.eql.models.User;
@@ -15,6 +17,7 @@ import com.eql.service.EnemyService;
 import com.eql.service.EquipmentService;
 import com.eql.service.PersoService;
 import com.eql.service.RaceService;
+import com.eql.service.RoleService;
 import com.eql.service.SessionService;
 import com.eql.service.StatService;
 import com.eql.service.UserService;
@@ -31,6 +34,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -54,6 +58,8 @@ public class AuthController {
     SessionService sessionService;
     @Autowired
     EnemyService enemyService;
+    @Autowired
+    RoleService roleService;
 
     @GetMapping("/index")
     public String home(){
@@ -69,12 +75,28 @@ public class AuthController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         User user = new User();
-        model.addAttribute("user", user);
+        List<RoleChoose> roles = new ArrayList<>();
+        RoleChoose roleChoose = new RoleChoose("USER");
+        RoleChoose roleChoose2 = new RoleChoose("GM");
+        roles.add(roleChoose);
+        roles.add(roleChoose2);
+        model.addAttribute("roles",roles);
+        RoleChoose role = new RoleChoose();
+        model.addAttribute("role",role);
+        model.addAttribute("user",user);
         return "register";
     }
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("user")User user, BindingResult result, Model model){
+    public String registration(@Valid @ModelAttribute("user")User user, @ModelAttribute("role") RoleChoose role , BindingResult result, Model model){
         User existingUser = service.findUserByEmail(user.getEmail());
+        List<Role> roles = roleService.roles();
+        Role roleFinal = new Role();
+
+        for (Role role1 : roles) {
+            if (role1.getLabel().contains(role.getLabel())){
+                roleFinal = role1;
+            }
+        }
         if (existingUser!=null && existingUser.getEmail()!=null){
             result.rejectValue("email",null,"Email already in use");
         }
@@ -82,7 +104,8 @@ public class AuthController {
             model.addAttribute("user",user);
             return "register";
         }
-        service.saveUser(user);
+        System.out.println(roleFinal);
+        service.saveUser(user,roleFinal);
         return "redirect:/index?success";
     }
     @GetMapping("/users")
@@ -93,7 +116,7 @@ public class AuthController {
     }
     @GetMapping("/login")
     public String login(){
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/sessions")
@@ -204,7 +227,7 @@ public class AuthController {
         personnage.setUser(user);
         persoService.savePerso(personnage);
         model.addAttribute("persos",persoService.findAllByUser(user.getId()));
-        return "/listPerso";
+        return "listPerso";
     }
     @GetMapping("/viewStat/{id}")
     public String showStat(@PathVariable(value = "id") Long id, Model model){
@@ -227,13 +250,13 @@ public class AuthController {
     public String saveStat(@ModelAttribute("stat")Stat stat, Model model){
         statService.saveStat(stat);
         model.addAttribute("stat",stat);
-        return "/statView";
+        return "statView";
     }
 
     @GetMapping("/raceInfo/{race}")
     public String showRaceInfo(@PathVariable(value = "race") String race, Model model){
         model.addAttribute("race", raceService.findByLabel(race));
-        return "/raceInfo";
+        return "raceInfo";
     }
 
     @GetMapping("/enterSession")

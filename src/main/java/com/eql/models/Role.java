@@ -29,4 +29,12 @@ public class Role {
     private String label;
     @ManyToMany(mappedBy = "roles")
     private List<User> users = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                '}';
+    }
 }

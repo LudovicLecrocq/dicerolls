@@ -28,13 +28,13 @@ public class UserServiceImpl implements UserService{
     PasswordEncoder encoder;
 
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user, Role role) {
 
         user.setPassword(encoder.encode(user.getPassword()));
-        Role role = roleRepository.findBylabel("ROLE_USER");
+        Role role2 = roleRepository.findBylabel("ROLE_USER");
 
-        if (role == null){
-            role = checkRoleExist();
+        if (role2 == null){
+            role2 = checkRoleExist();
         }
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
